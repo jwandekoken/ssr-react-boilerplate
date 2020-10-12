@@ -7,8 +7,8 @@ const app = express();
 // serve the public directory statically
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.send(renderer());
+app.get("*", (req, res) => {
+  res.send(renderer(req));
 });
 
 app.listen(3000, () => {
