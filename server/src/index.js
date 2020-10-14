@@ -17,15 +17,18 @@ app.get("*", (req, res) => {
   const store = createStore();
 
   // matchRoutes takes 2 args: the first is the routes config array, and the other the path that we want to access
-  // matchRoutes will return an array of components that are about to the rendered, based on the informed path
-
-  // we are destructuring the route property inside de map
-  matchRoutes(Routes, req.path).map(({ route }) => {
+  // matchRoutes will return an array of components that are about to be rendered, based on the informed path
+  // see that we are destructuring the route property inside de map
+  // this map statement gonna return an array of promises, each promises representing our network request to fetch the data, because the route.loadData() functions are async functions (async functions always return promises)
+  const promises = matchRoutes(Routes, req.path).map(({ route }) => {
     // if we have a loadData fn, we gonna call it, otherwise, we arent
-    return route.loadData ? route.loadData() : null;
+    // see that we are passing the (server-side) store to the loadData functions
+    return route.loadData ? route.loadData(store) : null;
   });
 
-  res.send(renderer(req, store));
+  Promise.all(promises).then(() => {
+    res.send(renderer(req, store));
+  });
 });
 
 app.listen(3000, () => {

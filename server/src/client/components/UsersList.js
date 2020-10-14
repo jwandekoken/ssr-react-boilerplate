@@ -24,8 +24,9 @@ const mapStateToProps = ({ users }) => ({
   users,
 });
 
-export const loadData = () => {
-  console.log("im trying to load some data");
+export const loadData = (store) => {
+  // our fetchUsers() action creator uses the async keyword, so it will return a promise, that represent out network request (async functions always return promises)
+  return store.dispatch(fetchUsers());
 };
 
 export default connect(mapStateToProps, {

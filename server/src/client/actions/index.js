@@ -21,7 +21,7 @@ export const fetchUsers = () => async (dispatch) => {
   try {
     const res = await axios.get("https://react-ssr-api.herokuapp.com/users");
 
-    console.log(res);
+    //console.log(res);
 
     dispatch({
       type: FETCH_USERS,
