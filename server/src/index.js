@@ -2,6 +2,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import express from "express";
+import proxy from "express-http-proxy";
 import { matchRoutes } from "react-router-config";
 import Routes from "./client/Routes";
 
@@ -9,6 +10,21 @@ import renderer from "./helpers/renderer";
 import createStore from "./helpers/createStore";
 
 const app = express();
+
+// if a request with path '/api' gets to the server, we gonna use this middleware, which gonna proxy the request to the url passed, that is our data API server
+// we are passing an config obj, this config obj, that we are using in particular here, is just to make it work with the data API the instructor made for us (because he is using the Google OAuth, to make it sure that we dont run into any security errors with the google OAuth flow). But the proxyReqOptDecorator option is to ovveride most request options before issuing the proxyRequest.
+// (https://www.npmjs.com/package/express-http-proxy#proxyreqoptdecorator--supports-promise-form)
+//  See that we are changing the 'x-forwarded-host' header
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host
+app.use(
+  "/api",
+  proxy("http://react-ssr-api.herokuapp.com", {
+    proxyReqOptDecorator(opts) {
+      opts.headers["x-forwarded-host"] = "localhost:3000";
+      return opts;
+    },
+  })
+);
 
 // serve the public directory statically
 app.use(express.static("public"));
