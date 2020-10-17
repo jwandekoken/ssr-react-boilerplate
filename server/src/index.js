@@ -30,7 +30,8 @@ app.use(
 app.use(express.static("public"));
 
 app.get("*", (req, res) => {
-  const store = createStore();
+  // we will pass the request obj to our fn, so we can take the cookie object, and use it to create our axios instance, afterwards, we gonna pass our axios instance to our redux-thunk middleware, so we can use this axios instance to make the requests inside our action creators
+  const store = createStore(req);
 
   // matchRoutes takes 2 args: the first is the routes config array, and the other the path that we want to access
   // matchRoutes will return an array of components that are about to be rendered, based on the informed path

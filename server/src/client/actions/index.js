@@ -1,11 +1,7 @@
 // types
 export const FETCH_USERS = "FETCH_USERS";
 
-export const fetchUsers = () => async (
-  dispatch,
-  getState,
-  clientSideAxiosInstance
-) => {
+export const fetchUsers = () => async (dispatch, getState, axiosInstance) => {
   /*axios
     .get("https://react-ssr-api.herokuapp.com/users")
     .then((res) => {
@@ -21,7 +17,7 @@ export const fetchUsers = () => async (
   */
 
   try {
-    const res = await clientSideAxiosInstance.get("/users");
+    const res = await axiosInstance.get("/users");
 
     //console.log(res);
 
