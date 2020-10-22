@@ -45,6 +45,11 @@ module.exports = {
         ],
         exclude: /\.module\.css$/,
       },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+      },
     ],
   },
 };
