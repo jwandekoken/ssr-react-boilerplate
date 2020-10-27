@@ -3,6 +3,8 @@
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import UsersListPage from "./pages/UsersListPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import AdminsListPage from "./pages/AdminsListPage";
 
 export default [
   {
@@ -21,6 +23,17 @@ export default [
         ...UsersListPage,
         path: "/users",
         exact: true,
+      },
+      {
+        // AdminsListPage is a object with a 'component' and a 'loadData' key
+        ...AdminsListPage,
+        path: "/admins",
+        exact: true,
+      },
+      {
+        // NotFoundPage is a object with a 'component' key
+        // by not providing a path, react-router will always show this component, at this point (if no other component gets called before)
+        ...NotFoundPage,
       },
     ],
   },

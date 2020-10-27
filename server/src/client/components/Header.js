@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = ({ auth }) => {
-  console.log("auth", auth);
+  console.log("authentication status: ", auth);
 
   // about the links below: from the browser perspective, we are making a request to "localhost/api/logout" or "localhost/api/auth/google", which gonna be proxied to out data API
   // and note that we are using an anchor tag, because Link tags we use only to navigate inside our application, using react-router-dom. When we want to make a real request, we have to use anchor tags
