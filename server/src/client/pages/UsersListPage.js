@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
 
+import userImg from "./users.png";
 import { fetchUsers } from "../actions";
 
 const UsersList = ({ users, fetchUsers }) => {
@@ -12,11 +14,37 @@ const UsersList = ({ users, fetchUsers }) => {
     return users.map((user) => <li key={user.id}>{user.name}</li>);
   };
 
+  const head = () => {
+    return (
+      <Helmet>
+        <title>{`${users.length} Users Loaded`}</title>
+        <meta property="og:type" content="Users App" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+    );
+  };
+
   return (
-    <div>
-      Here's a big list of users:
-      <ul>{renderUsers()}</ul>
-    </div>
+    <>
+      {head()}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={userImg}
+            alt="user"
+            style={{ display: "block", width: "100px" }}
+          />
+        </div>
+        Here's a big list of users:
+        <ul>{renderUsers()}</ul>
+      </div>
+    </>
   );
 };
 
